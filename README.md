@@ -12,6 +12,24 @@ Repositório: https://github.com/gui1080/mariposas_fischer
 
 Estou usando DB Browser for SQlite para ver o Banco de Dados na medida que faço o Backend, e Imsomnia para fazer testes da API.
 
+Roda com: 
+
+```
+
+npm run start
+
+```
+
+Na porta: 
+
+```
+
+http://localhost:8000/
+
+```
+
+A requisição para esta porta deve retornar um "OK", indicando que o backend está funcionando.
+
 ----------------
 
 ```
