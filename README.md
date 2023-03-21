@@ -32,6 +32,54 @@ A requisição para esta porta deve retornar um "OK", indicando que o backend es
 
 ----------------
 
+### Endereços da API (Extreme Quickguide)
+
+```
+
+POST - "/"
+Retorna um "ok"
+
+GET - "/test/welcome_test"
+Header: my_token
+Testa se autenticação funciona!
+
+POST - "/api/users/register"
+Body: Email e Password
+Retorna token
+
+POST - "/api/users/login"
+Body: Email e Password
+Retorna token
+
+GET - "/api/user/:id"
+Header: my_token
+ID no cabeçalho
+
+POST - "/api/user/email"
+Body - Email
+Header: my_token
+
+PATCH - "/api/user/update/:email"
+Body: Name, Email e Password
+Header: my_token
+Email no cabeçalho
+
+DELETE - "/api/user/:email"
+Header: my_token
+Email no cabeçalho
+
+POST - "/api/users_get"
+Header: my_token
+Precisa ser adm!
+
+POST - "/api/users/logout"
+Body: Email e Password
+Header: my_token
+
+```
+
+----------------
+
 ```
 
 /*
