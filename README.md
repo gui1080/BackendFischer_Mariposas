@@ -2,7 +2,7 @@
 
 ----------------
 
-O banco de dados onde as coletas estão não está público, e é de autoria do Guilherme Fischer. 
+O banco de dados onde as coletas (arquivo de BD SQlite e pasta de imagens das coletas) estão não está público, e é de autoria do Guilherme Fischer. 
 
 Contato do Fischer: https://www.inaturalist.org/people/gafischer
 
