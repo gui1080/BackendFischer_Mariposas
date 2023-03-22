@@ -29,28 +29,32 @@ users_router.post("/register", (req, res, next) => {
     db_mariposa.get(sql_retrieve, params, (err, rows) => {
 
         // se passou daqui o usuário existe
-        if (err) {
+        if (rows != undefined || rows != null || err) {
             res.status(400).send("User already exists!");
+            console.log(rows)
+            return;
+        }
+        else{
+            // cria token
+            const token = jwt.sign(
+                { user_email: data.email },
+                "secret",
+                {
+                    expiresIn: "2h",
+                }
+            );
+
+            var sql_insert = 'INSERT INTO user (name, email, password, token) VALUES (?, ?, ?, ?)'
+                        
+            db_mariposa.run(sql_insert, [data.name, data.email, md5(data.password), token])
+
+            res.status(200).json({"my_token":token, "name": data.name, "email": data.email});
             return;
         }
 
     });
 
-    // cria token
-    const token = jwt.sign(
-        { user_email: data.email },
-        "secret",
-        {
-            expiresIn: "2h",
-        }
-    );
-
-    var sql_insert = 'INSERT INTO user (name, email, password, token) VALUES (?, ?, ?, ?)'
-                
-    db_mariposa.run(sql_insert, [data.name, data.email , md5(data.password), token])
     
-    res.status(200).json({"my_token":token, "name": data.name, "email": data.email});
-    return;
 
 });
 
