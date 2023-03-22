@@ -1,5 +1,8 @@
 var express = require("express")
+
+// rotas, API
 var app = express()
+
 var md5 = require('md5')
 var sqlite3 = require('sqlite3').verbose()
 const jwt = require("jsonwebtoken");
@@ -19,19 +22,8 @@ app.use(bodyParser.json());
 // Testes
 // ---------------------------------
 
-// Autenticação funcionando! Nesse endereço, se vc está autenticado, recebe um ok!
-app.post("/test/welcome_test", auth, (req, res) => {
-
-    res.status(200).send("Autenticação básica funcionando!");
-
-});
-
-// Funcionando! Na root, retorna um ok!
-app.get("/", (req, res, next) => {
-    
-    res.status(200).send("Ok, a API está rodando!")
-
-});
+const testesRoute = require('./routes/Tests.js')
+app.use("/testes",testesRoute)
 
 // Lidando com usuários!
 // ---------------------------------
