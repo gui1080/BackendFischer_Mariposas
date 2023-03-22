@@ -76,22 +76,22 @@ users_router.post("/login", (req, res, next) => {
             return res.status(400).json({"error":err.message});
         }
 
+        // cria token
+        const token = jwt.sign(
+            { user_email: data.email },
+            "secret",
+            {
+                expiresIn: "2h",
+            }
+        );
+
+        var sql_update = "UPDATE user SET token = ? WHERE email = ? AND password = ?"
+
+        db_mariposa.run(sql_update, [token, data.email , md5(data.password)])
+        
+        return res.status(200).json({"my_token":token, "name": data.name, "email": data.email});
+
     });
-
-    // cria token
-    const token = jwt.sign(
-        { user_email: data.email },
-        "secret",
-        {
-            expiresIn: "2h",
-        }
-    );
-
-    var sql_update = "UPDATE user SET token = ? WHERE email = ?, password = ?"
-
-    db_mariposa.run(sql_update, [token, data.email , md5(data.password)])
-    
-    return res.status(200).json({"my_token":token, "name": data.name, "email": data.email});
 
 });
 
