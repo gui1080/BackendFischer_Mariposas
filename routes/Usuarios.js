@@ -67,7 +67,7 @@ users_router.post("/login", (req, res, next) => {
         password : req.body.password ? md5(req.body.password) : null
     }
 
-    var sql_retrieve = "SELECT * from user WHERE email = ?, password = ?"
+    var sql_retrieve = "SELECT * from user WHERE email = ? AND password = ?"
     var params = [data.email, data.password]
 
     console.log("senha")
