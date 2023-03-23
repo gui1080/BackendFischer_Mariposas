@@ -35,16 +35,8 @@ app.use("/MothImgs", imageMothsRoute)
 // Lidando com coletas de Mariposas!
 // ---------------------------------
 
-/*
-> Adicionar nova coleta
-
-> Ver coletas passadas
-
-> Deletar uma dada coleta
-
-> Ver coleta por filtro
-
-*/
+const collectionMothsRoute = require('./routes/MothCollection.js')
+app.use("/MothCollection", collectionMothsRoute)
 
 
 module.exports = app
