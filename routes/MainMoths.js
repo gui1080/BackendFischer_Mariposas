@@ -127,7 +127,7 @@ mainMoths_router.post("/registerMainMoth", (req, res, next) => {
                 let identificador = ' ';
 
                 for ( let i = 0; i < length; i++ ) {
-                    identificador += characters.charAt(Math.floor(Math.random() * OpcoesLength));
+                    identificador += Opcoes.charAt(Math.floor(Math.random() * OpcoesLength));
                 }
             
                 var sql_insert = 'INSERT INTO main (nome, identificador) VALUES (?, ?)'
