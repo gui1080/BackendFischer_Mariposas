@@ -61,7 +61,7 @@ users_router.post("/register", (req, res, next) => {
                 );
 
                 var sql_insert = 'INSERT INTO user (name, email, password, token) VALUES (?, ?, ?, ?)'
-                            
+                
                 db_mariposa.run(sql_insert, [data.name, data.email, md5(data.password), token])
 
                 res.status(200).json({"my_token":token, "name": data.name, "email": data.email});

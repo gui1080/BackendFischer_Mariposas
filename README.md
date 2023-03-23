@@ -8,6 +8,8 @@ Contato do Fischer: https://www.inaturalist.org/people/gafischer
 
 Primeiro passo foi fazer a extração dos dados, para isso usei Python. 
 
+Não criei modelos para essa API, é tudo de um banco de dados de um script prévio, então só escrevi as insterações com o BD como queries de SQLite.
+
 Repositório: https://github.com/gui1080/mariposas_fischer
 
 Estou usando DB Browser for SQlite para ver o Banco de Dados na medida que faço o Backend, e Imsomnia para fazer testes da API.
@@ -24,7 +26,7 @@ Na porta:
 
 ```
 
-http://localhost:8000/
+http://localhost:8000/test/
 
 ```
 
@@ -61,16 +63,26 @@ PATCH = "/MainMoths/mainMoths_PatchId/:id"
 PATCH = "/MainMoths/mainMoths_PatchNome/:nome"
 
 // Moth Imgs route
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
-POST = "/MothImgs/"
+GET = "/MothImgs/imageMoths_getAll"
+GET = "/MothImgs/imageMoths_getSomeFamilia/:id"
+GET = "/MothImgs/imageMoths_getSomeFamilia/:nome"
+GET = "/MothImgs/imageMoths_getSomeFamilia/:familia"
+GET = "/MothImgs//imageMoths_getSomeSubfamilia/:familia/:sub_familia"
+POST = "/MothImgs/imageMoths_newImage/"
+DELETE = "/MothImgs/delete_img_id/:id"
+DELETE = "/MothImgs/delete_img_arquivo/:arquivo"
+
+// Moth colletion route
+GET = "/MothCollection/collectionMoths_getAll"
+POST = "/MothCollection/collectionMoths_filter_genus/:genus"
+GET = "/MothCollection/collectionMoths_filter_species/:species"
+GET = "/MothCollection/collectionMoths_filter_locality/:locality"
+GET = "/MothCollection/collectionMoths_get/:id"
+GET = "/MothCollection/collectionMoths_get/:id"
+GET = "/MothCollection/collectionMoths_filter_main/:id_main"
+PATCH = "/MothCollection/collectionMoths_update/:id_coleta"
+DELETE = "/MothCollection/collectionMoths_/:id"
+POST = "/MothCollection/collectionMoths_add/:referencia_main"
 
 ```
 
