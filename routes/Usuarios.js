@@ -1,5 +1,6 @@
 var md5 = require('md5')
 var sqlite3 = require('sqlite3').verbose()
+var validator = require('validator');
 const jwt = require("jsonwebtoken");
 
 const express = require('express')
@@ -23,41 +24,55 @@ users_router.post("/register", (req, res, next) => {
         password : req.body.password ? md5(req.body.password) : null
     }
 
-    var sql_retrieve = "SELECT * from user WHERE email = ?, password = ?"
-    var params = [data.email, data.password]
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
 
-    db_mariposa.get(sql_retrieve, params, (err, rows) => {
+    var correctEmail = validator.isEmail(req.body.email);
+    var correctPassword = validator.register('strict', value => passwordRegex.test(value),'Password must contain at least one uppercase letter, one lowercase letter and one number');
 
-        // se passou daqui o usuário existe
-        if (rows != undefined || rows != null || err) {
-            res.status(400).send("User already exists!");
-            console.log(rows)
-            return;
-        }
-        else{
-            // cria token
-            const token = jwt.sign(
-                { user_email: data.email },
-                "secret",
-                {
-                    expiresIn: "2h",
-                }
-            );
+    if (!correctEmail || !correctPassword){
+        
+        res.status(400).send("User does not fit the criteria!");
+        console.log(correctEmail)
+        console.log(correctPassword)
+        return; 
 
-            var sql_insert = 'INSERT INTO user (name, email, password, token) VALUES (?, ?, ?, ?)'
-                        
-            db_mariposa.run(sql_insert, [data.name, data.email, md5(data.password), token])
+    }
+    else{
 
-            res.status(200).json({"my_token":token, "name": data.name, "email": data.email});
-            return;
-        }
+        var sql_retrieve = "SELECT * from user WHERE email = ? AND password = ?"
+        var params = [data.email, data.password]
 
-    });
+        db_mariposa.get(sql_retrieve, params, (err, rows) => {
 
-    
+            // se passou daqui o usuário existe
+            if (rows != undefined || rows != null || err) {
+                res.status(400).send("User already exists!");
+                console.log(rows)
+                return;
+            }
+            else{
+                // cria token
+                const token = jwt.sign(
+                    { user_email: data.email },
+                    "secret",
+                    {
+                        expiresIn: "2h",
+                    }
+                );
+
+                var sql_insert = 'INSERT INTO user (name, email, password, token) VALUES (?, ?, ?, ?)'
+                            
+                db_mariposa.run(sql_insert, [data.name, data.email, md5(data.password), token])
+
+                res.status(200).json({"my_token":token, "name": data.name, "email": data.email});
+                return;
+            }
+
+        });
+
+    }    
 
 });
-
 
 // login usuário
 users_router.post("/login", (req, res, next) => {
@@ -189,6 +204,7 @@ users_router.delete("/:email", auth, (req, res) => {
             }
 
             res.json({"message":"User deleted!", changes: this.changes})
+    
     });
 })
 
@@ -217,7 +233,7 @@ users_router.post("/users_get", auth, (req, res) => {
         else{
             
             res.json({
-                "message":"Permissão pendente!",
+                "message":"Pending permission!",
                 "data":rows
             })
 
@@ -247,18 +263,15 @@ users_router.post("/logout", auth, (req, res) => {
             res.status(400).json({"error":err.message});
             return;
         }
+        // cria token
+        const token = "000000"
 
+        var sql_update = "UPDATE user SET token = ? WHERE email = ?, password = ?"
+
+        db_mariposa.run(sql_update, [token, data.email , md5(data.password)])
+        
+        return res.status(200).json({"my_token":token, "message": "Bye!"});
     });
-
-    // cria token
-    const token = "000000"
-
-    var sql_update = "UPDATE user SET token = ? WHERE email = ?, password = ?"
-
-    db_mariposa.run(sql_update, [token, data.email , md5(data.password)])
-    
-    return res.status(200).json({"my_token":token, "message": "Adeus!"});
-
 });
 
 module.exports = users_router;

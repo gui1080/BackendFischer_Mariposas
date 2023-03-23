@@ -10,6 +10,10 @@ const verifyToken = (req, res, next) => {
 
     if (!token) {
         return res.status(403).send("A token is required for authentication");
+    } else{
+        if(token === "000000"){
+            return res.status(403).send("Log in first!");
+        }
     }
 
     try {
