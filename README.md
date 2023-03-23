@@ -1,4 +1,6 @@
-# Backend das Mariposas para meu amigo Fischer
+# Backend em NodeJs para gestão de Mariposas
+
+## Catalogação, gestão de imagens e de coletas
 
 ----------------
 
@@ -63,36 +65,36 @@ POST - "/users/users_get"
 POST - "/users/logout"
 
 // Main Moths route
-GET = "/MainMoths/mainMoths_getAll"
-GET = "/MainMoths/mainMoths_get/:nome"
-GET = "/MainMoths/mainMoths_get/:id"
-POST = "/MainMoths/registerMainMoth"
-DELETE = "/MainMoths/delete/:nome"
-POST = "/MainMoths/mainMoths_filter"
-PATCH = "/MainMoths/mainMoths_PatchId/:id"
-PATCH = "/MainMoths/mainMoths_PatchNome/:nome"
+GET - "/MainMoths/mainMoths_getAll"
+GET - "/MainMoths/mainMoths_get/:nome"
+GET - "/MainMoths/mainMoths_get/:id"
+POST - "/MainMoths/registerMainMoth"
+DELETE - "/MainMoths/delete/:nome"
+POST - "/MainMoths/mainMoths_filter"
+PATCH - "/MainMoths/mainMoths_PatchId/:id"
+PATCH - "/MainMoths/mainMoths_PatchNome/:nome"
 
 // Moth Imgs route
-GET = "/MothImgs/imageMoths_getAll"
-GET = "/MothImgs/imageMoths_getSomeFamilia/:id"
-GET = "/MothImgs/imageMoths_getSomeFamilia/:nome"
-GET = "/MothImgs/imageMoths_getSomeFamilia/:familia"
-GET = "/MothImgs//imageMoths_getSomeSubfamilia/:familia/:sub_familia"
-POST = "/MothImgs/imageMoths_newImage/"
-DELETE = "/MothImgs/delete_img_id/:id"
-DELETE = "/MothImgs/delete_img_arquivo/:arquivo"
+GET - "/MothImgs/imageMoths_getAll"
+GET - "/MothImgs/imageMoths_getSomeFamilia/:id"
+GET - "/MothImgs/imageMoths_getSomeFamilia/:nome"
+GET - "/MothImgs/imageMoths_getSomeFamilia/:familia"
+GET - "/MothImgs//imageMoths_getSomeSubfamilia/:familia/:sub_familia"
+POST - "/MothImgs/imageMoths_newImage/"
+DELETE - "/MothImgs/delete_img_id/:id"
+DELETE - "/MothImgs/delete_img_arquivo/:arquivo"
 
 // Moth colletion route
-GET = "/MothCollection/collectionMoths_getAll"
-POST = "/MothCollection/collectionMoths_filter_genus/:genus"
-GET = "/MothCollection/collectionMoths_filter_species/:species"
-GET = "/MothCollection/collectionMoths_filter_locality/:locality"
-GET = "/MothCollection/collectionMoths_get/:id"
-GET = "/MothCollection/collectionMoths_get/:id"
-GET = "/MothCollection/collectionMoths_filter_main/:id_main"
-PATCH = "/MothCollection/collectionMoths_update/:id_coleta"
-DELETE = "/MothCollection/collectionMoths_/:id"
-POST = "/MothCollection/collectionMoths_add/:referencia_main"
+GET - "/MothCollection/collectionMoths_getAll"
+POST - "/MothCollection/collectionMoths_filter_genus/:genus"
+GET - "/MothCollection/collectionMoths_filter_species/:species"
+GET - "/MothCollection/collectionMoths_filter_locality/:locality"
+GET - "/MothCollection/collectionMoths_get/:id"
+GET - "/MothCollection/collectionMoths_get/:id"
+GET - "/MothCollection/collectionMoths_filter_main/:id_main"
+PATCH - "/MothCollection/collectionMoths_update/:id_coleta"
+DELETE - "/MothCollection/collectionMoths_/:id"
+POST - "/MothCollection/collectionMoths_add/:referencia_main"
 
 ```
 
@@ -102,7 +104,68 @@ POST = "/MothCollection/collectionMoths_add/:referencia_main"
 
 ![The database](https://github.com/gui1080/mariposas_fischer/blob/master/bd.png?raw=true)
 
+Obs: A coluna de caminho absoluto das imagens foi deletada na versão final.
+
+Obs 1: A tabela de usuários foi criada depois ao desenvolver o backend, que inclui um sistema de autenticação.
+
+```
+
+CREATE TABLE "coleta" (
+    "inst_bar_code" TEXT,
+    "genus" TEXT,
+    "species" TEXT,
+    "author" TEXT,
+    "sex" TEXT,
+    "number_of_spec" REAL,
+    "museum_coll" TEXT,
+    "country" TEXT,
+    "province" TEXT,
+    "locality" TEXT,
+    "date" TEXT,
+    "collector" TEXT,
+    "type" TEXT,
+    "accession" TEXT,
+    "lat" TEXT,
+    "lat1" TEXT,
+    "lat2" TEXT,
+    "lat_hem" TEXT,
+    "long" REAL,
+    "long1" TEXT,
+    "long2" REAL,
+    "long_hem" TEXT,
+    "id_coleta" TEXT,
+    "referencia_main" TEXT
+)
+
+CREATE TABLE "imagens" (
+	"identificador"	TEXT,
+	"nome"	TEXT,
+	"string_arquivo"	TEXT,
+	"caminho_relativo"	TEXT,
+	"familia_nome"	TEXT,
+	"sub_familia_nome"	TEXT,
+	"identificador_referencia"	TEXT
+)
+
+CREATE TABLE "main" (
+    "nome" TEXT,
+    "identificador" TEXT
+)
+
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name text, 
+    email text UNIQUE, 
+    password text, 
+    token text, 
+    CONSTRAINT email_unique UNIQUE (email)
+)
+
+```
+
 ----------------
+
+### License
 
 ```
 
