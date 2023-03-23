@@ -19,6 +19,16 @@ Roda com:
 ```
 
 npm run start
+npm run dev
+
+```
+
+Que se equivale respectivamente a:
+
+```
+
+node server.js
+nodemon server.js
 
 ```
 
