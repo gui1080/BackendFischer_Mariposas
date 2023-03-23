@@ -16,6 +16,16 @@ Repositório: https://github.com/gui1080/mariposas_fischer
 
 Estou usando DB Browser for SQlite para ver o Banco de Dados na medida que faço o Backend, e Imsomnia para fazer testes da API.
 
+Para baixar as dependências, rode de dentro do diretório do trabalho em cópia local: 
+
+```
+
+sudo npm install
+
+```
+
+Isso deve baixar todas as dependências necessárias numa pasta chamada "node_modules". 
+
 Roda com: 
 
 ```
