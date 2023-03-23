@@ -17,7 +17,7 @@ const auth = require("../middleware/auth.js");
 // ---------------------------------
 
 // pega todas os bichos da Main
-mainMoths_router.post("/mainMoths_get", auth, (req, res) => {
+mainMoths_router.get("/mainMoths_getAll", auth, (req, res) => {
 
     var sql = "SELECT * FROM main"
     var params = []
@@ -42,7 +42,7 @@ mainMoths_router.post("/mainMoths_get", auth, (req, res) => {
 });
 
 // ve bicho da main baseado no nome
-mainMoths_router.post("/mainMoths_get/:nome", auth, (req, res) => {
+mainMoths_router.get("/mainMoths_get/:nome", auth, (req, res) => {
 
     var sql = "SELECT * FROM main WHERE nome = ?"
     var params = [req.params.nome]
@@ -67,7 +67,7 @@ mainMoths_router.post("/mainMoths_get/:nome", auth, (req, res) => {
 });
 
 // ve bicho da main baseado no id
-mainMoths_router.post("/mainMoths_get/:id", auth, (req, res) => {
+mainMoths_router.get("/mainMoths_get/:id", auth, (req, res) => {
 
     var sql = "SELECT * FROM main WHERE identificador = ?"
     var params = [req.params.id]
@@ -145,7 +145,7 @@ mainMoths_router.post("/registerMainMoth", (req, res, next) => {
 });
 
 // delete moth by name
-mainMoths_router.delete("/:nome", auth, (req, res) => {
+mainMoths_router.delete("delete/:nome", auth, (req, res) => {
 
     db_mariposa.run(
         'DELETE FROM main WHERE nome = ?',
@@ -204,31 +204,65 @@ mainMoths_router.post("/mainMoths_filter", auth, (req, res) => {
 
 });
 
-// IMAGENS
-// ---------------------------------
+// update moth by id
+mainMoths_router.patch("/mainMoths_PatchId/:id", auth, (req, res) => {
+    
+    var data = {
+        nome: req.body.nome,
+        identificador: req.body.identificador
+    }
 
+    db_mariposa.run(
+        `UPDATE main set 
+            nome = COALESCE(?,nome),
+            identificador = COALESCE(?,identificador), 
+            WHERE identificador = ?`,
+        [data.nome, data.identificador, req.params.id],
+        function (err, result) {
 
-/*
+            if (err){
+                res.status(400).json({"error": res.message})
+                return;
+            }
 
+            res.json({
+                message: "success",
+                data: data,
+                changes: this.changes
+            })
 
-> Adicionar nova imagem
+    });
+})
 
-identificador_referencia é nome de coleta comparando com nome na tabela main
+// update moth by name
+mainMoths_router.patch("/mainMoths_PatchNome/:nome", auth, (req, res) => {
+    
+    var data = {
+        nome: req.body.nome,
+        identificador: req.body.identificador
+    }
 
-se não achar:
-identificador referencia é "sub_familia" + "familia" comparando com nome main
+    db_mariposa.run(
+        `UPDATE main set 
+            nome = COALESCE(?,nome),
+            identificador = COALESCE(?,identificador), 
+            WHERE nome = ?`,
+        [data.nome, data.identificador, req.params.nome],
+        function (err, result) {
 
-se não achar isso também
-identificador referencia é "familia" comparando com nome main (primeira ocorrência)
+            if (err){
+                res.status(400).json({"error": res.message})
+                return;
+            }
 
-> Ver todas as imagem
+            res.json({
+                message: "success",
+                data: data,
+                changes: this.changes
+            })
 
-> Ver todas as imagens de um dado "familia_nome"
+    });
+})
 
-> Ver todas as imagens de um dado "familia_nome" + "sub_familia_nome"
-
-> Deleta uma certa imagem da main
-
-*/
 
 module.exports = mainMoths_router;

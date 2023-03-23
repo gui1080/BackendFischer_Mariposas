@@ -36,45 +36,41 @@ A requisição para esta porta deve retornar um "OK", indicando que o backend es
 
 ```
 
-POST - "/"
-Retorna um "ok"
-
+// Tests route
+POST - "/test/"
 GET - "/test/welcome_test"
-Header: my_token
-Testa se autenticação funciona!
 
-POST - "/api/users/register"
-Body: Email e Password
-Retorna token
+// Users route
+POST - "/users/register"
+POST - "/users/login"
+GET - "/users/:id"
+POST - "/users/email"
+PATCH - "/users/update/:email"
+DELETE - "/delete/users/:email"
+POST - "/users/users_get"
+POST - "/users/logout"
 
-POST - "/api/users/login"
-Body: Email e Password
-Retorna token
+// Main Moths route
+GET = "/MainMoths/mainMoths_getAll"
+GET = "/MainMoths/mainMoths_get/:nome"
+GET = "/MainMoths/mainMoths_get/:id"
+POST = "/MainMoths/registerMainMoth"
+DELETE = "/MainMoths/delete/:nome"
+POST = "/MainMoths/mainMoths_filter"
+PATCH = "/MainMoths/mainMoths_PatchId/:id"
+PATCH = "/MainMoths/mainMoths_PatchNome/:nome"
 
-GET - "/api/user/:id"
-Header: my_token
-ID no cabeçalho
-
-POST - "/api/user/email"
-Body - Email
-Header: my_token
-
-PATCH - "/api/user/update/:email"
-Body: Name, Email e Password
-Header: my_token
-Email no cabeçalho
-
-DELETE - "/api/user/:email"
-Header: my_token
-Email no cabeçalho
-
-POST - "/api/users_get"
-Header: my_token
-Precisa ser adm!
-
-POST - "/api/users/logout"
-Body: Email e Password
-Header: my_token
+// Moth Imgs route
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
+POST = "/MothImgs/"
 
 ```
 

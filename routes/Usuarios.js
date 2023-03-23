@@ -189,7 +189,7 @@ users_router.patch("/update/:email", auth, (req, res) => {
 })
 
 // deletar um usuário
-users_router.delete("/:email", auth, (req, res) => {
+users_router.delete("/delete/:email", auth, (req, res) => {
 
     db_mariposa.run(
         'DELETE FROM user WHERE email = ?',

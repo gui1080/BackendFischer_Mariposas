@@ -24,8 +24,13 @@ app.use("/users", usuariosRoute)
 // Lidando com Mariposas!
 // ---------------------------------
 
+// main
 const mainMothsRoute = require('./routes/MainMoths.js')
 app.use("/MainMoths", mainMothsRoute)
+
+// imagens
+const imageMothsRoute = require('./routes/MothImgs.js')
+app.use("/MothImgs", imageMothsRoute)
 
 // Lidando com coletas de Mariposas!
 // ---------------------------------
