@@ -241,54 +241,75 @@ collectionMoths_router.patch("/collectionMoths_update/:id_coleta", auth, (req, r
     }
 
     // Genus não pode começar em lower case
+
+    const uppercase_start = /[A-Z][a-z]*/
+    const lowercase_only = /[a-z]/
+
     // species não pode começar em upper case
+    // genus tem que começar com upper case
+    let spec_ok = Boolean(data.species.match(lowercase_only))
+    let genus_ok = Boolean(data.genus.match(uppercase_start))
+
+    var sex_ok = 1
+    
     // sex tem que ser M ou F
+    if(data.sex == "f" || data.sex == "F" || data.sex == "m" || data.sex == "M"){
+        sex_ok = 0
+    }
+
     // de resto, não há regras
+    if(!spec_ok || !genus_ok || !sex_ok){
+        res.status(400).json({"error": res.message})
+        return;
+    }
+    else{    
 
-    db_mariposa.run(
-        `UPDATE user set 
-            inst_bar_code = COALESCE(?,inst_bar_code), 
-            genus = COALESCE(?,genus), 
-            species = COALESCE(?,species), 
-            author = COALESCE(?,author), 
-            sex = COALESCE(?,sex), 
-            number_of_spec = COALESCE(?,number_of_spec), 
-            museum_coll = COALESCE(?,museum_coll), 
-            country = COALESCE(?,country), 
-            province = COALESCE(?,province), 
-            locality = COALESCE(?,locality), 
-            date = COALESCE(?,date), 
-            collector = COALESCE(?,collector), 
-            type = COALESCE(?,type), 
-            accession = COALESCE(?,accession), 
-            lat = COALESCE(?,lat), 
-            lat1 = COALESCE(?,lat1), 
-            lat2 = COALESCE(?,lat2), 
-            lat_hem = COALESCE(?,lat_hem), 
-            long = COALESCE(?,long), 
-            long1 = COALESCE(?,long1), 
-            long2 = COALESCE(?,long2), 
-            long_hem = COALESCE(?,long_hem), 
-            WHERE id_coleta = ?`,
-        [data.inst_bar_code, data.genus, data.species, data.author, data.sex, 
-            data.number_of_spec, data.museum_coll, data.country, data.province, data.locality,
-            data.date, data.collector, data.type, data.accession, data.lat, data.lat1, 
-            data.lat2, data.lat_hem, data.long, data.long1, data.long2, data.long_hem, req.params.id_coleta],
-        
-        function (err, result) {
+        db_mariposa.run(
+            `UPDATE user set 
+                inst_bar_code = COALESCE(?,inst_bar_code), 
+                genus = COALESCE(?,genus), 
+                species = COALESCE(?,species), 
+                author = COALESCE(?,author), 
+                sex = COALESCE(?,sex), 
+                number_of_spec = COALESCE(?,number_of_spec), 
+                museum_coll = COALESCE(?,museum_coll), 
+                country = COALESCE(?,country), 
+                province = COALESCE(?,province), 
+                locality = COALESCE(?,locality), 
+                date = COALESCE(?,date), 
+                collector = COALESCE(?,collector), 
+                type = COALESCE(?,type), 
+                accession = COALESCE(?,accession), 
+                lat = COALESCE(?,lat), 
+                lat1 = COALESCE(?,lat1), 
+                lat2 = COALESCE(?,lat2), 
+                lat_hem = COALESCE(?,lat_hem), 
+                long = COALESCE(?,long), 
+                long1 = COALESCE(?,long1), 
+                long2 = COALESCE(?,long2), 
+                long_hem = COALESCE(?,long_hem), 
+                WHERE id_coleta = ?`,
+            [data.inst_bar_code, data.genus, data.species, data.author, data.sex, 
+                data.number_of_spec, data.museum_coll, data.country, data.province, data.locality,
+                data.date, data.collector, data.type, data.accession, data.lat, data.lat1, 
+                data.lat2, data.lat_hem, data.long, data.long1, data.long2, data.long_hem, req.params.id_coleta],
+            
+            function (err, result) {
 
-            if (err){
-                res.status(400).json({"error": res.message})
-                return;
-            }
+                if (err){
+                    res.status(400).json({"error": res.message})
+                    return;
+                }
 
-            res.json({
-                message: "success",
-                data: data,
-                changes: this.changes
-            })
+                res.json({
+                    message: "success",
+                    data: data,
+                    changes: this.changes
+                })
 
-    });
+        });
+
+    }
 })
 
 
