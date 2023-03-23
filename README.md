@@ -88,6 +88,12 @@ POST = "/MothCollection/collectionMoths_add/:referencia_main"
 
 ----------------
 
+### Banco de dados
+
+![The database](https://github.com/gui1080/mariposas_fischer/blob/master/bd.png?raw=true)
+
+----------------
+
 ```
 
 /*

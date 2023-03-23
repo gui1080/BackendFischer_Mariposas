@@ -241,7 +241,6 @@ collectionMoths_router.patch("/collectionMoths_update/:id_coleta", auth, (req, r
     }
 
     // Genus não pode começar em lower case
-
     const uppercase_start = /[A-Z][a-z]*/
     const lowercase_only = /[a-z]/
 
