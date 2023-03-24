@@ -1,0 +1,9 @@
+site_name: Documentação - Backend para Gestão de Mariposas
+site_ur: https://FischerMothAPI.com
+theme: readthedocs
+
+nav:
+    - 'index.md'
+    - 'bd.md'
+    - 'api_guide.md'
+    - 'eu.md'
